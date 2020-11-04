@@ -8,62 +8,104 @@
 </head>
 <body>
     <div id="app">
-        <h2>Permainan {{ permainan.nama }}</h2>
-        <input v-model="number" placeholder="masukkan angka"/>
-        {{randomNumber()}}
-        <div>
-            <button @click="TebakAngka">Tebak</button>
-        </div>
-        
-        <span v-if="number === 'randomNumber'"> Benar</span>
-        <span v-else>salah</span>
-        
-        
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
-        
-        <template >
-            
-            <v-card height="150">
-              <v-footer
-                
-                class="font-weight-medium"
-              >
-                <v-col
-                  class="text-center"
-                  cols="10"
-                >
-                {{ nama }} | {{ npm }} | {{ kelas }}
-                </v-col>
-              </v-footer>
-            </v-card>
-          </template>
-
-      </div>
-      
+        <form name="isi">
+            <div v-if="kesempatan == '0'">
+                <h1>Tebak Angka 1 - 10 </h1>
+                <br>
+                <input v-model="Tebakan" type="text" name="Tebakan"/>
+                <br>
+                <input type="button" @click="TebakAngka()" value="Tebak" />
+            </div>
+            <div v-if="kesempatan == '1'">
+                <h1>Tebak Angka</h1>
+                <p>Selamat, Tebakanmu Benar  </p>
+                <br>
+                <input type="button" @click="reset()" value="main lagi"/>
+            </div>
+            <div v-if="kesempatan == '2'">
+                <h1>Tebak Angka</h1>
+                <br>
+                <p>Tebakanmu salah, silahkan coba lagi!!</p>
+                <p>kesempatanmu tersisa {{ 3 - counter }} kali lagi</p>
+                <br>
+                <input v-model="Tebakan" type="text" name="Tebakan"/>
+                <br>
+                <input type="button" @click="TebakAngka()" value="main lagi" />
+            </div>
+            <div v-if="kesempatan == '3'">
+                <h1>Tebak Angka</h1>
+                <br>
+                <p>kesempatanmu tersisa {{ 3 - counter }} kali lagi</p>
+                <p>Kesempatanmu Sudah habis</p>
+                <br>
+                <input type="button" @click="reset()" value="main lagi"/>
+            </div>
+            <footer>
+            {{ mahasiswa.nama }} | {{ mahasiswa.npm }} | Kelas {{ mahasiswa.kelas }}
+          </footer>
+        </form>
+    </div>
 </body>
-<footer>
-    
-</footer>
-  <script>
-      new Vue({
+<script>
+    let app = new Vue({
         el: "#app",
         data: {
-            nama: 'robet',
-            npm : 180709783,
-            kelas: 'D',
-            permainan: {
-            nama: 'Tebak Angka'
-            }
-        },
-    methods : {
-        TebakAngka() {
-                this.TebakAngka == randomNumber; 
+            mahasiswa: {
+                nama: 'robet',
+                npm: 180709783,
+                kelas: 'D'
             },
-      randomNumber : function(){
-        return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-      }
-    }
-  });
-  </script>
+            Tebakan: "",
+            randomnumber: 0,
+            counter: 0,
+            kesempatan: "0"
+          
+        },
+        methods: {
+            randomNumber: function(){
+                this.randomnumber = Math.floor(Math.random() * (10 - 1 + 1)) + 1 ;
+            },
+            TebakAngka: function(Tebakan){
+                if(this.randomnumber == 0) this.randomNumber();
 
+                let num = parseInt(this.Tebakan);
+                this.Tebakan = "";
+                num = Math.ceil(num);
+                if(num > 0 && num < 11){
+                    this.counter++;
+                    if(num == this.randomnumber){
+                        this.kesempatan = "1";
+                    }else{
+                        if(this.counter == 3) {
+                            this.kesempatan = "3"
+                        }else{
+                            this.kesempatan = "2"
+                        }
+                    }
+                    isi.reset();
+                }else{
+                    isi.reset();
+                }
+            },
+            reset: function(){
+                this.kesempatan = "0";
+                this.randomNumber();
+                this.counter = 0;
+            }
+        }
+    });
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unguided</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>Permainan {{ permainan.nama }}</h2>
+        <input v-model="number" placeholder="masukkan angka"/>
+        {{randomNumber()}}
+        <div>
+            <button @click="TebakAngka">Tebak</button>
+        </div>
+        
+        <span v-if="number === 'randomNumber'"> Benar</span>
+        <span v-else>salah</span>
+        
+        
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+        
+        <template >
+            
+            <v-card height="150">
+              <v-footer
+                
+                class="font-weight-medium"
+              >
+                <v-col
+                  class="text-center"
+                  cols="10"
+                >
+                {{ nama }} | {{ npm }} | {{ kelas }}
+                </v-col>
+              </v-footer>
+            </v-card>
+          </template>
+
+      </div>
+      
+</body>
+<footer>
+    
+</footer>
+  <script>
+      new Vue({
+        el: "#app",
+        data: {
+            nama: 'robet',
+            npm : 180709783,
+            kelas: 'D',
+            permainan: {
+            nama: 'Tebak Angka'
+            }
+        },
+    methods : {
+        TebakAngka() {
+                this.TebakAngka == randomNumber; 
+            },
+      randomNumber : function(){
+        return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      }
+    }
+  });
+  </script>
+
+</html>

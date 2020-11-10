@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" contents="width=device-width initial-scale=1.0"/>
+        <title>UGD 9783</title>
+        <script src="vue.js"></script>       
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      </head>
+    <style>
+        body {
+          background-image: url('bg.jpg');
+        }
+        .center {
+            border: 8px solid #000000;
+            padding: 10px;
+            margin: auto;
+            width: 80%;
+        }
+        label{
+            font-size: 32px;
+        }
+        table,thead, tbody{
+            background-color: greenyellow;
+        }
+    </style>
+    <body>
+        <div id="app" class="center">
+            <form ref="formInputan">
+                <div class="form-group">
+                  <label for="formGroupTujuan">Apa yang mau kamu kerjakan?</label>
+                  <input v-model="Tujuan" type="text" class="form-control" id="formGroupTujuan" placeholder="Yang mau kamu kerjakan">
+                </div>
+                <div class="form-group">
+                  <label for="formGroupCatatan">Ada catatan penting?</label>
+                  <input v-model="Catatan" type="text" class="form-control" id="formGroupCatatan" placeholder="Catatan penting">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupLevel">Penting Gak?</label>
+                    <select v-model="Level" class="custom-select" @click="Level_check">
+                        <option disabled value="">Silahkan pilih tingkat kepentingan</option>
+                        <option>Tidak Penting</option>
+                        <option>Biasa</option>
+                        <option>Penting</option>
+                      </select>
+                </div>
+                <button type="button" class="btn btn-primary" @click="addTodo">Tambah</button>
+            
+                <button type="button" class="btn btn-warning" @click="submitForm">Reset Form</button>
+              </form>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Pekerjaan</th>
+                    <th>Catatan</th>
+                    <th>Tingkat Kepentingan</th>
+                    <th>Hapus</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(lists, index) in full_list" :key="lists.id">
+                    <td>{{ lists.Tujuan }}</td>
+                    <td>{{ lists.Catatan }}</td>
+                    <td>{{ lists.Level }}</td>
+                    <td><button type="button" class="btn btn-danger" @click="removeTodo(lists.id)">X</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            <footer>
+                <p>{{ nama }}|{{ npm }}|{{ kelas }}</p>
+            </footer>
+        </div>
+
+    </body>
+    <script>
+        new Vue({
+            el: "#app",
+            data:{
+                nama: "Robet",
+                npm:"180709783",
+                kelas:"Kelas D",
+                Tujuan: "",
+                Catatan: "",
+                Level: "",
+                full_list: [],
+                Level_val: false,
+                array_count: 1,
+            },
+            methods: {
+                addTodo(){
+                    if(this.Level_val){
+                    this.full_list.push(
+                      {id:this.array_count,
+                       Tujuan:this.Tujuan,
+                       Catatan:this.Catatan,
+                       Level:this.Level})
+                    this.array_count++;
+                    }
+                },
+                removeTodo(id){
+                  for (index = 0; index < this.full_list.length; index++)
+                    if(this.full_list[index].id == id){
+                      this.$delete(this.full_list, index);
+                      break;
+                    }  
+                },
+                Level_check(){
+                  if(this.Level !="")
+                    this.Level_val = true;
+                },
+                submitForm(){
+                this.$refs.formInputan.reset();
+              },
+            },
+            computed:{
+              
+            }
+        });
+    </script>
+</html>
